@@ -27,11 +27,10 @@ of this is done.
 
 Pick whichever matches your distro:
 
-```sh
-# Arch / CachyOS / Manjaro (AUR)
-paru -S broadcast-bin        # pre-built binaries
-# or: paru -S broadcast-git  # build from source
+Not on the AUR yet — `broadcast-bin` there is an unrelated project, don't
+install it expecting this one. Use one of the options below.
 
+```sh
 # Ubuntu / Debian / Mint / Pop!_OS
 gh release download --repo londospark/broadcast -p '*.deb' --dir /tmp/
 sudo dpkg -i /tmp/broadcast-ctl_*.deb /tmp/broadcast-gui_*.deb
@@ -122,7 +121,6 @@ rm ~/.config/pipewire/pipewire.conf.d/50-{deepfilter,maxine}-{input,output}.conf
 systemctl --user restart pipewire pipewire-pulse wireplumber
 
 # Uninstall the CLI/GUI, matching however you installed them in step 2
-paru -R broadcast-bin                                # AUR
 sudo dpkg -r broadcast-ctl broadcast-gui              # .deb
 sudo rpm -e broadcast-ctl broadcast-gui               # .rpm
 rm ~/.local/bin/broadcast-ctl ~/.local/bin/broadcast-gui   # manual binaries
