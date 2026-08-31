@@ -103,6 +103,41 @@ omarchy plugin update io.github.londospark.broadcast
 (This only updates the bar widget. Update `broadcast-ctl`/`broadcast-gui`
 the same way you installed them in step 2.)
 
-## License
+## Removing
 
-GPL-3.0-or-later, same as the main [broadcast](https://github.com/londospark/broadcast) repo.
+```sh
+omarchy plugin remove io.github.londospark.broadcast
+```
+
+That only removes the bar widget. To undo the rest of the setup:
+
+```sh
+# Drop the filter chain configs and restart PipeWire
+rm ~/.config/pipewire/pipewire.conf.d/50-{deepfilter,maxine}-{input,output}.conf \
+   ~/.config/pipewire/pipewire.conf.d/50-broadcast-defaults.conf
+systemctl --user restart pipewire pipewire-pulse wireplumber
+
+# Uninstall the CLI/GUI, matching however you installed them in step 2
+paru -R broadcast-bin                                # AUR
+sudo dpkg -r broadcast-ctl broadcast-gui              # .deb
+sudo rpm -e broadcast-ctl broadcast-gui               # .rpm
+rm ~/.local/bin/broadcast-ctl ~/.local/bin/broadcast-gui   # manual binaries
+
+# Uninstall a backend, e.g. DeepFilterNet on Arch
+paru -R libdeep_filter_ladspa-git
+# Maxine's SDK lives under ~/.local/share/nvidia-maxine-sdk and the
+# built plugin under ~/.local/lib/ladspa/ — rm -rf both if you installed it
+```
+
+## License and dependencies
+
+The plugin itself is GPL-3.0-or-later, same as the main
+[broadcast](https://github.com/londospark/broadcast) repo it drives. It runs
+unsandboxed inside Omarchy's shell process and shells out to `broadcast-ctl`
+(also GPL-3.0-or-later) — no user configuration is touched until you
+explicitly run `broadcast-ctl install-config --apply` yourself in step 4.
+
+`broadcast-ctl` in turn depends on PipeWire and one of two LADSPA noise-
+suppression backends: [DeepFilterNet](https://github.com/Rikorose/DeepFilterNet)
+(MIT/Apache-2.0) or NVIDIA's proprietary [Maxine Audio Effects SDK](https://developer.nvidia.com/maxine)
+(NVIDIA SDK license, requires an NGC account) — see step 3.
