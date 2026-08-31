@@ -69,12 +69,16 @@ and make sure `ladspa` (the LADSPA SDK/host tools) is installed too.
 
 ```sh
 git clone https://github.com/londospark/broadcast.git /tmp/broadcast
+git -C /tmp/broadcast checkout --detach f697bc915d7b4449c4ab45329be577f61025feb6
 NGC_API_KEY=your_key_here bash /tmp/broadcast/scripts/install-maxine-sdk.sh
 ```
 
-This has to build against the SDK, so it needs the full `broadcast` repo
-cloned — there's no standalone Maxine installer. You can delete `/tmp/broadcast`
-once it finishes; it installs the built plugin to `~/.local/lib/ladspa/`.
+The commit above is pinned to the exact `broadcast` snapshot this plugin was
+last synced against — kept up to date automatically on every sync, so it
+always matches what was actually reviewed rather than a moving branch. This
+has to build against the SDK, so it needs the full `broadcast` repo cloned —
+there's no standalone Maxine installer. You can delete `/tmp/broadcast` once
+it finishes; it installs the built plugin to `~/.local/lib/ladspa/`.
 
 ## 4. Write and load the PipeWire filter chain config
 
