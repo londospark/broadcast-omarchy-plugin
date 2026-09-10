@@ -89,7 +89,7 @@ bundle covers, build against NVIDIA's SDK directly with your own (free)
 
 ```sh
 git clone https://github.com/londospark/broadcast.git /tmp/broadcast
-git -C /tmp/broadcast checkout --detach 63fa9b060aef4cac9e38d70db926bd9899f67801
+git -C /tmp/broadcast checkout --detach 98a91bc06f826cbacc642c7124c782a5e7a5409f
 NGC_API_KEY=your_key_here bash /tmp/broadcast/scripts/install-maxine-sdk.sh
 ```
 
